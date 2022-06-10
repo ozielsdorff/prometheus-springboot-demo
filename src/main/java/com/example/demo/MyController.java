@@ -1,8 +1,11 @@
 package com.example.demo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,7 +16,22 @@ public class MyController {
 		return "Hello Human!";
 	}
 	
-	//200
+	@GetMapping("/delay")
+	ResponseEntity<String> delay(@RequestParam int ms) throws InterruptedException {
+		TimeUnit.MILLISECONDS.sleep(ms);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body("");
+	}
+	
+	@GetMapping("/long-delay")
+	ResponseEntity<String> longDelay() throws InterruptedException {
+		TimeUnit.SECONDS.sleep(30);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body("");
+	}
+	
 	@GetMapping("/ok")
 	ResponseEntity<String> ok() {
 		return ResponseEntity
@@ -21,7 +39,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//202
 	@GetMapping("/accepted")
 	ResponseEntity<String> accepted() {
 		return ResponseEntity
@@ -29,7 +46,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//500
 	@GetMapping("/internal-server-error")
 	ResponseEntity<String> internalServerError() {
 		return ResponseEntity
@@ -37,7 +53,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//404
 	@GetMapping("/not-found")
 	ResponseEntity<String> notFound() {
 		return ResponseEntity
@@ -45,7 +60,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//400
 	@GetMapping("/bad-request")
 	ResponseEntity<String> clientError() {
 		return ResponseEntity
@@ -53,7 +67,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//308
 	@GetMapping("/permanent-redirect")
 	ResponseEntity<String> permanentRedirect() {
 		return ResponseEntity
@@ -61,7 +74,6 @@ public class MyController {
 				.body("");
 	}
 	
-	//307
 	@GetMapping("/temporary-redirect")
 	ResponseEntity<String> temporaryRedirect() {
 		return ResponseEntity
